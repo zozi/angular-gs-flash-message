@@ -19,7 +19,7 @@ angular.module('gs.flash-message', [])
     restrict: 'A',
     scope: true,
     template:
-      '<div class="alert">' +
+      '<div class="alert" ng-if="messages.error.length || messages.success.length">' +
         '<div ng-if="messages.error.length" class="alert--message alert--message__error">' +
           '<span class="alert--message--content" ng-bind="messages.error"></span>' +
           '<a href="javascript:;" ng-click="close()">' +

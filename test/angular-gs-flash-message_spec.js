@@ -66,4 +66,8 @@ describe('angular-gs-flash-message', function () {
     expect(el.text()).toBe('lel');
   });
 
+  it('does not show up without a message', function () {
+    expect(el.html()).toBe('');
+  });
+
 });
