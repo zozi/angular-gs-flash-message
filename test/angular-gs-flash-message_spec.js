@@ -67,7 +67,7 @@ describe('angular-gs-flash-message', function () {
   });
 
   it('does not show up without a message', function () {
-    expect(el.html()).toBe('');
+    expect(el.html()).toBe('<!-- ngIf: messages.error.length || messages.success.length -->');
   });
 
 });
