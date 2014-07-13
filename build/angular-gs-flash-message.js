@@ -5,9 +5,13 @@ angular.module('gs.flash-message', [])
 
   function _messageWrapper (messages) {
     messages = messages || {};
-    messages.success = messages.success || '';
-    messages.error = messages.error || '';
-
+    _.forEach(['success', 'error'], function (key) {
+      messages[key] = (_.isArray(messages[key])
+                        ? messages[key]
+                        : (_.isString(messages[key])
+                          ? [messages[key]]
+                          : []));
+    });
     return messages;
   }
 
@@ -21,13 +25,13 @@ angular.module('gs.flash-message', [])
     template:
       '<div class="alert" ng-if="messages.error.length || messages.success.length">' +
         '<div ng-if="messages.error.length" class="alert--message alert--message__error">' +
-          '<span class="alert--message--content" ng-bind="messages.error"></span>' +
+          '<span class="alert--message--content" ng-repeat="error in messages.error track by $index" ng-bind="error"></span>' +
           '<a href="javascript:;" ng-click="close()">' +
             '<i class="alert--message--remove-icon"></i>' +
           '</a>' +
         '</div>' +
         '<div ng-if="messages.success.length" class="alert--message alert--message__success">' +
-          '<span class="alert--message--content" ng-bind="messages.success"></span>' +
+          '<span class="alert--message--content" ng-repeat="success in messages.success track by $index" ng-bind="success"></span>' +
           '<a href="javascript:;" ng-click="close()">' +
             '<i class="alert--message--remove-icon"></i>' +
           '</a>' +
