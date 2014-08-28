@@ -20,7 +20,8 @@
   ],
   "dependencies": {
     "angular": ">= 1.0.0",
-    "angular-ui-router": "*"
+    "angular-ui-router": "*",
+    "angular-sanitize": "latest"
   },
   "devDependencies": {
     "angular-mocks": ">= 1.0.0"
