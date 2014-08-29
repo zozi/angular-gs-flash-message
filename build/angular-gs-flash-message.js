@@ -9,7 +9,7 @@ angular.module('gs.flash-message', ['ngSanitize'])
       messages[key] = (_.isArray(messages[key])
                         ? messages[key]
                         : (_.isString(messages[key])
-                          ? $sce.trustAsHtml([messages[key]])
+                          ? [$sce.trustAsHtml(messages[key])]
                           : []));
     });
     return messages;
