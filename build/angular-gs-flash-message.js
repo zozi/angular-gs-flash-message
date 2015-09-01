@@ -5,7 +5,7 @@ angular.module('gs.flash-message', ['ngSanitize'])
 
   function _messageWrapper (messages) {
     messages = messages || {};
-    _.forEach(['success', 'error'], function (key) {
+    _.forEach(Object.keys(messages), function (key) {
       messages[key] = (_.isArray(messages[key])
                         ? messages[key]
                         : (_.isString(messages[key])
@@ -23,16 +23,10 @@ angular.module('gs.flash-message', ['ngSanitize'])
     restrict: 'A',
     scope: true,
     template:
-      '<div class="alert" ng-if="messages.error.length || messages.success.length">' +
-        '<div ng-if="messages.error.length" class="alert--message alert--message__error">' +
-          '<span class="alert--message--content" ng-repeat="error in messages.error track by $index" ng-bind-html="error"></span>' +
-          '<a href="javascript:;" ng-click="close()">' +
-            '<i class="alert--message--remove-icon"></i>' +
-          '</a>' +
-        '</div>' +
-        '<div ng-if="messages.success.length" class="alert--message alert--message__success">' +
-          '<span class="alert--message--content" ng-repeat="success in messages.success track by $index" ng-bind-html="success"></span>' +
-          '<a href="javascript:;" ng-click="close()">' +
+      '<div class="alert" ng-if="flashMessagesPopulated()">' +
+        '<div ng-if="messageList.length" ng-repeat="(key, messageList) in messages" class="alert--message alert--message__{{ key }}"">' +
+          '<span class="alert--message--content" ng-repeat="message in messageList track by $index" ng-bind-html="message"></span>' +
+          '<a href ng-click="close()">' +
             '<i class="alert--message--remove-icon"></i>' +
           '</a>' +
         '</div>' +
@@ -63,6 +57,10 @@ angular.module('gs.flash-message', ['ngSanitize'])
       scope.close = function () {
         scope.messages = _messageWrapper({});
         return scope.messages;
+      };
+
+      scope.flashMessagesPopulated = function () {
+        return _.any(scope.messages, 'length');
       };
     }
   };
